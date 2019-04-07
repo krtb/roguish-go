@@ -2,12 +2,11 @@ package main
 
 import (
   "fmt"
-  "math/rand"
   "os"
   "time"
 
   "github.com/gdamore/tcell"
-  "github.com/gdamore/tcell"
+  "github.com/mattn/go-runewidth"
 )
 
 func emitStr(s tcell.Screen, x, y int, style tcell.Style, str string) {
@@ -73,9 +72,12 @@ loop:
     case <-quit:
       break loop
     case <-time.After(time.Millisecond * 50):
-    }
-
-    // makebox(s)
+	}
+	// clear our screen inside our loop
+    s.Clear()
+		emitStr(s, 0, 0, white, "@")
+	// call show to actually display it on screen
+	s.Show()
   }
 
   s.Fini()
