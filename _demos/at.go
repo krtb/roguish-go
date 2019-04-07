@@ -5,10 +5,24 @@ import (
   "math/rand"
   "os"
   "time"
-  
+
   "github.com/gdamore/tcell"
   "github.com/gdamore/tcell"
 )
+
+func emitStr(s tcell.Screen, x, y int, style tcell.Style, str string) {
+  for _, c := range str {
+    var comb []rune
+    w := runewidth.RuneWidth(c)
+    if w == 0 {
+      comb = []rune{c}
+      c = ' '
+      w = 1
+    }
+    s.SetContent(x, y, c, comb, style)
+    x += w
+  }
+}
 
 func main() {
   tcell.SetEncodingFallback(tcell.EncodingFallbackASCII)
@@ -22,10 +36,17 @@ func main() {
     os.Exit(1)
   }
 
+// pass white directly to our printing function
+  white := tcell.StyleDefault.
+    Foreground(tcell.ColorWhite).
+    Background(tcell.ColorBlack)
+
+// swap forground and background colors
   s.SetStyle(tcell.StyleDefault.
-    Foreground(tcell.ColorBlack).
-    Background(tcell.ColorWhite))
+    Foreground(tcell.ColorWhite).
+    Background(tcell.ColorBlack))
   s.Clear()
+
 
   quit := make(chan struct{})
   go func() {
