@@ -31,6 +31,14 @@ func emitStr(s tcell.Screen, x, y int, style tcell.Style, str string) {
 }
 
 func main() {
+// will be printing out location to the screen, don't need to use debug
+  debug:=false
+// initialize player instance at 0,0
+  player:= player{
+	  x:0,
+	  y:0,
+  }
+ 
   tcell.SetEncodingFallback(tcell.EncodingFallbackASCII)
   s, e := tcell.NewScreen()
   if e != nil {
