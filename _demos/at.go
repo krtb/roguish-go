@@ -9,6 +9,13 @@ import (
   "github.com/mattn/go-runewidth"
 )
 
+// holds coordinates of where we want player to be
+type player struct {
+	x int
+	y int
+}
+// use above struct to tell emitStr() where we are, allows us to move on the screen
+
 func emitStr(s tcell.Screen, x, y int, style tcell.Style, str string) {
   for _, c := range str {
     var comb []rune
